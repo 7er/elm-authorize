@@ -18,6 +18,8 @@
     "webpack-dev-server": "^2.4.5"
   },
   "scripts": {
-    "start": "node api.js"
+    "api": "node api.js",
+    "build": "webpack",
+    "client": "webpack-dev-server --port 3000"
   }
 }
