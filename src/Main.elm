@@ -3,15 +3,15 @@ module Main exposing (..)
 import Html exposing (Html, div, text, program, button)
 import Html.Events exposing (onClick)
 
+import Models exposing (Model, initialModel)
+
 main : Program Never Model Msg
 main = Html.program { init = init, update = update, view = view, subscriptions = subscriptions }
-
-type alias Model = String
 
 type alias Msg = Int
 
 init : (Model, Cmd Msg)
-init = ("flesk", Cmd.none)
+init = (initialModel, Cmd.none)
 
 update : Msg -> Model -> (Model, Cmd Msg)       
 update msg model =
