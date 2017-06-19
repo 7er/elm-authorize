@@ -1,22 +1,21 @@
 module Models exposing (..)
 
-type alias PlayerId = String
-    
-type alias Player = {
-        id : PlayerId,
-        name : String,
-        level : Int
-            
+
+type alias Party =
+    { name : String
+    , href : String
     }
 
-type alias Model = {
-        players: List Player
+
+type alias Model =
+    { parties : List Party
+    , filter : Maybe String
     }
+
 
 initialModel : Model
-initialModel = {
-    players = [ Player "1" "Sam" 1 ]
+initialModel =
+    { --parties = [ { name = "Foo", href = "http://www.python.org" }, { name = "Bar", href = "http://www.ruby-lang.org" } ]
+      parties = []
+    , filter = Nothing
     }
-
-    
-
