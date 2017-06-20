@@ -1,23 +1,21 @@
 module Main exposing (..)
 
-import Html exposing (Html, div, text, program, button, ul, li, a)
-import Html.Attributes exposing (href)
-
-
---import Html.Events exposing (onClick)
-
 import Http
 import Json.Decode as Decode
+import Html
+import Msgs exposing (..)
 import Models exposing (Model, Party, initialModel)
+import Views
 
 
 main : Program Never Model Msg
 main =
-    Html.program { init = init, update = update, view = view, subscriptions = always Sub.none }
-
-
-type Msg
-    = PartiesResponse (Result Http.Error (List Party))
+    Html.program
+        { init = init
+        , update = update
+        , view = Views.view
+        , subscriptions = always Sub.none
+        }
 
 
 decodeParties : Decode.Decoder (List Party)
@@ -56,25 +54,15 @@ update msg model =
         PartiesResponse (Err error) ->
             Debug.log (toString error) ( model, Cmd.none )
 
+        Search ->
+            Debug.log "implementer filter her" ( model, Cmd.none )
 
-partyToLi : Party -> Html Msg
-partyToLi party =
-    li []
-        [ a [ href party.href ]
-            [ text party.name
-            ]
-        ]
-
-
-partyList : List Party -> Html Msg
-partyList parties =
-    ul [] (List.map partyToLi parties)
-
-
-view : Model -> Html Msg
-view model =
-    div []
-        [ partyList model.parties
-
-        --, button [ onClick 5 ] [ text "Change" ]
-        ]
+        UpdateSearch filterString ->
+            let
+                filter =
+                    if (filterString |> String.trim |> String.length) == 0 then
+                        Nothing
+                    else
+                        Just filterString
+            in
+                ( { model | filter = filter }, Cmd.none )
